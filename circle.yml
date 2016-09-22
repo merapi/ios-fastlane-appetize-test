@@ -13,4 +13,4 @@ deployment:
   staging:
     branch: master
     commands:
-     - ./upload_appetize.sh
+     - sh ./upload_appetize.sh
