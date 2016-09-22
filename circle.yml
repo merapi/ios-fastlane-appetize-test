@@ -1,0 +1,16 @@
+machine:
+  xcode:
+    version: 7.3.1
+test:
+  override:
+    - set -o pipefail &&
+      xcodebuild 
+      -project 'ios/IosFastlaneAppetizeTest.xcodeproj' 
+      -scheme 'IosFastlaneAppetizeTest' 
+      -sdk iphonesimulator9.3 
+      -derivedDataPath ios/build
+deployment:
+  staging:
+    branch: master
+    commands:
+     - ./upload_appetize.sh
