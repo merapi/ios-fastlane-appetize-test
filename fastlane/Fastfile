@@ -52,7 +52,7 @@ lane :run_appetize do
   UI.message(zipped_bundle)
   UI.message(ENV['APPETIZE_API_TOKEN'])
 
-  appetize(path: zipped_bundle, note: "Build: #{ENV['CIRCLE_BUILD_NUM']}")
+  appetize(path: zipped_bundle, note: "Build: ##{ENV['CIRCLE_BUILD_NUM']}")
 
   url = appetize_viewing_url_generator(scale: "100", color: "black", device: "iphone6s")
   UI.message("Generated URL: #{url}")
