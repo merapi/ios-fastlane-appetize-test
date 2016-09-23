@@ -1,5 +1,5 @@
 #!/bin/bash
-if ! BUILD_IOS; then
+if [ -n $BUILD_IOS ]; then
     echo "BUILD_IOS is 0";
     exit;
 fi

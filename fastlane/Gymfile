@@ -1,0 +1,5 @@
+clean true
+project ENV['FL_BUILD_NUMBER_PROJECT']
+scheme "IosFastlaneAppetizeTest"
+sdk "iphoneos9.3"
+output_directory "./ios/build"

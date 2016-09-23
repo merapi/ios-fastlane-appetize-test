@@ -1,44 +1,18 @@
 machine:
   xcode:
     version: 7.3.1
-  environment:
-    BUILD_IOS: $(echo 0)
 
 dependencies:
   pre:
-    - gem install octokit
+    - gem update fastlane
+    - gem cleanup
 
 test:
-  pre: 
   override:
-  - |
-    if [[ "$BUILD_IOS" == "1" ]]; then
-      echo BUILD_IOS is 1 &&
-      set -o pipefail &&
-      xcodebuild
-        -project 'ios/IosFastlaneAppetizeTest.xcodeproj'
-        -scheme 'IosFastlaneAppetizeTest'
-        -sdk iphonesimulator9.3
-        -derivedDataPath ios/build
-    else
-      echo BUILD_IOS is 0
-    fi
+    - echo "tests"
 
 deployment:
   staging:
-    branch: sample-pr
+    branch: /.*/
     commands:
-      - sh ./upload_appetize.sh
-      - sh ./check_labels.sh
-      - ruby ./labels.rb
-
-notify:
-  webhooks:
-    - url: http://webskill.pl/circle.php
-
-# https://circleci.com/docs/environment-variables/
-# use fastlane? https://github.com/fastlane/fastlane/pull/814/files
-# production:
-#   branch: master
-#   commands:
-#   - fastlane production
+      - bundle exec fastlane check

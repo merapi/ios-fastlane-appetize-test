@@ -1,0 +1,60 @@
+lane :check do
+  body = ''
+
+  labels = github_pr_get_labels
+  if labels and labels.include? 'appetize'
+    link = run_appetize
+    body << ':iphone: [Appetize #' + ENV['CIRCLE_BUILD_NUM'] + '](' + link + ')' + "\n\n"
+  end
+  if labels and labels.include? 'fabric'
+    run_fabric
+    link = 'https://fabric.io/_/beta'
+    body << ':package: [Fabric #' + ENV['CIRCLE_BUILD_NUM'] + '](' + link + ')' + "\n\n"
+  end
+
+  if body != ''
+    github_pr_add_comment(body: body) #"Builds ready:\n\n" + 
+    clear_derived_data
+  end
+  
+end
+
+lane :run_fabric do
+  ENV['FL_BUILD_NUMBER_PROJECT'] = 'ios/IosFastlaneAppetizeTest.xcodeproj'
+  increment_build_number(build_number: ENV['CIRCLE_BUILD_NUM'])
+  cert
+  sigh
+  gym
+  crashlytics(
+    api_token: ENV['FABRIC_API_TOKEN'],
+    build_secret: ENV['FABRIC_SECRET'],
+    groups: ENV['FABRIC_GROUP'],
+    notes: "Automatic iOS Build #{ENV['CIRCLE_BUILD_NUM']}"
+  )
+end
+
+lane :run_appetize do
+  #ios/build
+  tmp_path = "/tmp/appetize_build"
+  xcodebuild(
+    project: "ios/IosFastlaneAppetizeTest.xcodeproj",
+    sdk: "iphonesimulator",
+    scheme: "IosFastlaneAppetizeTest",
+    derivedDataPath: tmp_path,
+    configuration: 'Release'
+  )
+
+  app_path = Dir[File.join(tmp_path, "**", "*.app")].last
+  UI.user_error!("Couldn't find app") unless app_path
+
+  zipped_bundle = zip(path: app_path, output_path: File.join(tmp_path, "Result.zip"))
+
+  UI.message(zipped_bundle)
+  UI.message(ENV['APPETIZE_API_TOKEN'])
+
+  appetize(path: zipped_bundle)
+
+  url = appetize_viewing_url_generator(scale: "100", color: "black", device: "iphone6s")
+  UI.message("Generated URL: #{url}")
+  url
+end
