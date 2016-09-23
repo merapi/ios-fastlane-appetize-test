@@ -14,6 +14,9 @@ module Fastlane
         repo = ENV['CIRCLE_PROJECT_USERNAME'] + '/' + ENV['CIRCLE_PROJECT_REPONAME']
         id = ENV['CI_PULL_REQUEST'].split('/')[-1]
 
+        puts id
+        puts repo
+
         headers = { 'User-Agent' => 'fastlane-get_github_pr_labels' }
         headers['Authorization'] = "token #{token}" if token
 
