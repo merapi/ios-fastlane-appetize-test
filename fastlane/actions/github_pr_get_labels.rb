@@ -9,6 +9,11 @@ module Fastlane
         require 'json'
         require 'excon'
 
+        if ENV['CI_PULL_REQUEST'] == ''
+          UI.message('Commit not in PR')
+          return nil
+        end
+
         params[:api_token] = ENV['GITHUB_API_TOKEN']
         token = ENV['GITHUB_API_TOKEN']
         repo = ENV['CIRCLE_PROJECT_USERNAME'] + '/' + ENV['CIRCLE_PROJECT_REPONAME']
