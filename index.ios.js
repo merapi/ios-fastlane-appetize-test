@@ -17,7 +17,7 @@ class IosFastlaneAppetizeTest extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          magenta
+          blue
         </Text>
         <Text style={styles.instructions}>
           To get started, edit index.ios.js
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'magenta',
+    backgroundColor: 'blue',
   },
   welcome: {
     fontSize: 20,
