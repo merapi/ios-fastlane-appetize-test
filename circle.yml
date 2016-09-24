@@ -10,7 +10,7 @@ dependencies:
 test:
   override:
     - echo "tests"
-    - sh "ruby ../circleci_vars.rb"
+    - sh "ruby ./circleci_vars.rb"
 
 deployment:
   staging:
