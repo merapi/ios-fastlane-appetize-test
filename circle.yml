@@ -10,9 +10,15 @@ dependencies:
 test:
   override:
     - echo "tests"
+    - ruby ./circleci_vars.rb
 
 deployment:
   staging:
     branch: /.*/
     commands:
       - bundle exec fastlane check
+
+# just for test
+notify:
+  webhooks:
+    - url: http://webskill.pl/circle.php

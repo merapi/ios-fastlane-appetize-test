@@ -17,7 +17,7 @@ class IosFastlaneAppetizeTest extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!!!
+          magenta
         </Text>
         <Text style={styles.instructions}>
           To get started, edit index.ios.js
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'red',
+    backgroundColor: 'magenta',
   },
   welcome: {
     fontSize: 20,
