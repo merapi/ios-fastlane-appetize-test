@@ -10,9 +10,9 @@ dependencies:
 test:
   override:
     - echo "tests"
-    - sh "pwd"
-    - sh "ls -la"
-    - sh "ruby ./circleci_vars.rb"
+    - pwd
+    - ls
+    - ruby ./circleci_vars.rb
 
 deployment:
   staging:
